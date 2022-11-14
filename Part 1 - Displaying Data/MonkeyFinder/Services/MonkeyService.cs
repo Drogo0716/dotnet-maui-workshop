@@ -1,4 +1,4 @@
-﻿using Android.Net.Wifi.Aware;
+﻿//using Android.Net.Wifi.Aware;
 using System.Net.Http.Json;
 
 namespace MonkeyFinder.Services;
@@ -10,6 +10,7 @@ public class MonkeyService
 
     public async Task<List<Monkey>> GetMonkeysAsync()
     {
+        await Task.Delay(2000);
         if (monkeyList.Count > 0)
             return monkeyList;
 

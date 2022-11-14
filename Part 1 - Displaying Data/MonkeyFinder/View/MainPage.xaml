@@ -4,69 +4,75 @@
              xmlns:model="clr-namespace:MonkeyFinder.Model"
              xmlns:viewmodel="clr-namespace:MonkeyFinder.ViewModel"
              x:DataType="viewmodel:MonkeysViewModel"
-             x:Class="MonkeyFinder.View.MainPage">
+             x:Class="MonkeyFinder.View.MainPage"
+             Title="{Binding Title}">
 
-    <VerticalStackLayout>
-        <Button Text="Get Monkeys" Command="{Binding GetMonkeysCommand}"
-                IsEnabled="{Binding IsNotBusy}"/>
 
-        <ActivityIndicator IsRunning="{Binding IsBusy}"
-                           IsVisible="{Binding IsBusy}"
-                           Color="DeepPink"/>
+    <Grid RowDefinitions="*,Auto"
+          ColumnSpacing="5"
+          ColumnDefinitions="*,*">
 
-        <CollectionView  ItemsSource ="{Binding Monkeys}">
-        <!--<CollectionView.ItemsSource>
-            <x:Array Type="{x:Type model:Monkey}">
-                <model:Monkey
-                Name="Baboon"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                Location="Africa and Asia" />
-                <model:Monkey
-                Name="Capuchin Monkey"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/capuchin.jpg"
-                Location="Central and South America" />
-                <model:Monkey
-                Name="Red-shanked douc"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                Location="Vietnam" />
-                <model:Monkey
-                Name="Red-shanked douc2"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                Location="Vietnam" />
-                <model:Monkey
-                Name="Red-shanked douc3"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                Location="Vietnam" />
-                <model:Monkey
-                Name="Red-shanked douc4"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                Location="Vietnam" />
-                <model:Monkey
-                Name="Red-shanked douc5"
-                Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                Location="Vietnam" />
-            </x:Array>
-            
-        </CollectionView.ItemsSource>-->
-
+        <CollectionView ItemsSource="{Binding Monkeys}"
+                        SelectionMode="None"
+                        Grid.ColumnSpan="2">
             <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:Monkey">
-                <HorizontalStackLayout Padding="10"
-                                       Spacing="10">
-                    <Image Source="{Binding Image}"
-                           HeightRequest="100"
-                           WidthRequest="100"
-                           Aspect="AspectFill"/>
-                    <VerticalStackLayout VerticalOptions="Center">
-                        <Label Text="{Binding Name}" FontSize="20" TextColor="Black"/>
-                        <Label Text="{Binding Location}" FontSize="10" TextColor="Black"/>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-        
-    </CollectionView>
-    
-    </VerticalStackLayout>
+
+                <DataTemplate x:DataType="model:Monkey">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="125"
+                               Style="{StaticResource CardView}">
+
+                            <Grid ColumnDefinitions="125,*"
+                                  RowDefinitions="*,*">
+                                <Image Aspect="AspectFill"
+                                       Source="{Binding Image}"
+                                       Grid.RowSpan="2"
+                                       WidthRequest="125"
+                                       HeightRequest="125"/>
+                                <Label Text="{Binding Name}" 
+                                       VerticalOptions="End"
+                                       TextColor="Grey"
+                                       Grid.Column="1"/>
+                                <Label Text="{Binding Location}" 
+                                       VerticalOptions="Start"
+                                       TextColor="DeepPink"
+                                       Grid.Column="1"/>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+                
+            </CollectionView.ItemTemplate>
+            
+            
+        </CollectionView>
+
+        <Button Text="Get Monkeys" 
+                Style="{StaticResource ButtonOutline}"
+                Command="{Binding GetMonkeysCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Margin="8"
+                Grid.Row="1"/>
+
+        <Frame HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Column="2"
+               Style="{StaticResource CardView}">
+            <VerticalStackLayout>
+            <ActivityIndicator Grid.ColumnSpan="2"
+                           Grid.RowSpan="2"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"/>
+
+            <Label Text="Loading" 
+                   Style="{StaticResource LargeLabel}" 
+                   IsVisible="{Binding IsBusy}"/>
+
+            </VerticalStackLayout>
+        </Frame>
+
+    </Grid>
 
 </ContentPage>
